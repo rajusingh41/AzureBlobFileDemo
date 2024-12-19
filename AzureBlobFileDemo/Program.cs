@@ -14,38 +14,18 @@ namespace AzureBlobFileDemo
             {
                 var filePath = "C:/Users/DELL/Downloads/sample-4.pdf";
                 var fileName = $"testPdfFile{DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss")}.pdf";
-                byte[] fileBytes = File.ReadAllBytes(filePath);
+               
                 string containerName = "mydemo1";
-
-                // string containerName = "invoices";
-                // string blobStorageConnectionString = "
                 string blobStorageConnectionString = "";
-                CloudStorageAccount StorageAccount = CloudStorageAccount.Parse(blobStorageConnectionString);
-
-                var blobClient = StorageAccount.CreateCloudBlobClient();
-                // Create a container for organizing blobs within the storage account.
-                var container = blobClient.GetContainerReference(containerName);
-                //container.CreateIfNotExists();
-                var directory = container.GetDirectoryReference("Test");
-                var dbFileName = "DefaultDemo/" + fileName;
-                var blob = directory.GetBlockBlobReference(dbFileName);
-
-                //Add content type for blob upload
-
-                //using (Stream _stream = new MemoryStream(fileBytes))
-                //{
-
-                    blob.UploadFromFile(filePath);
-                //}
+                string blobDirectory = "Test";
+                string blobFilePath = "DefaultDemo/" + fileName;
 
 
-                var sakToken = SasTokenProvider.GetSasToken(blobStorageConnectionString, containerName, "Test/"+dbFileName);
 
+               // Console.WriteLine($"{new UploadFileUsingMicrosoftAzureStorage().UploadFile(blobStorageConnectionString, containerName,blobDirectory, blobFilePath,filePath)}");
 
-                // string token = GetAccessToken(container);
-                //  Console.WriteLine($"{new Uri(blob.Uri, sakToken)}");
+                Console.WriteLine($"{new UploadFileUsingAzureStorageBlob().UploadFile(blobStorageConnectionString, containerName, blobDirectory, blobFilePath, filePath)}");
 
-                Console.WriteLine(sakToken);
             }
             catch (Exception ex)
             {
